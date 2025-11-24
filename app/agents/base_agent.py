@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Optional, Any
 from langchain_openai import ChatOpenAI
 from langchain_anthropic import ChatAnthropic
 from app.models.diff_models import DiffResult
@@ -59,7 +59,7 @@ class BaseReviewAgent(ABC):
             raise ValueError(f"Unsupported LLM provider: {llm_provider}. Use 'openai' or 'anthropic'")
     
     @abstractmethod
-    def analyze(self, diff_model: DiffResult) -> dict:
+    def analyze(self, diff_model: DiffResult) -> Any:
         """
         Analyze the diff and provide review feedback.
         
@@ -67,7 +67,8 @@ class BaseReviewAgent(ABC):
             diff_model: Parsed diff result containing file changes
             
         Returns:
-            Dictionary containing review results (structure to be defined by subclasses)
+            Review results (structure to be defined by subclasses).
+            Can be a dict, list, or other structure depending on the agent.
         """
         pass
 
