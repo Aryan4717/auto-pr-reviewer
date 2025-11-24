@@ -226,13 +226,21 @@ Return a JSON array of all readability issues found. If no issues are found, ret
             response = self.llm_client.invoke(messages)
             response_text = response.content if hasattr(response, 'content') else str(response)
             
+            # Debug: Print raw response
+            print(f"[DEBUG {self.name}] Raw LLM response length: {len(response_text)}")
+            print(f"[DEBUG {self.name}] First 200 chars: {response_text[:200]}")
+            
             # Parse response
             issues = self._parse_llm_response(response_text)
+            
+            print(f"[DEBUG {self.name}] Parsed {len(issues)} issues")
             
             return issues
             
         except Exception as e:
-            # If LLM call fails, return empty list
-            # In production, you might want to log this error
+            # Log the error for debugging
+            print(f"[ERROR {self.name}] LLM call failed: {str(e)}")
+            import traceback
+            traceback.print_exc()
             return []
 

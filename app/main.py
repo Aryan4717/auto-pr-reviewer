@@ -5,6 +5,14 @@ from app.utils.diff_parser import parse_diff
 from app.agents.supervisor_agent import SupervisorAgent
 import os
 
+# Load environment variables from .env file
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    # dotenv not installed, skip loading .env file
+    pass
+
 
 app = FastAPI(
     title="Auto PR Reviewer",

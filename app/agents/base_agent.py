@@ -42,7 +42,9 @@ class BaseReviewAgent(ABC):
         
         # Initialize LLM client based on provider
         if self.llm_provider == "openai":
-            model = model_name or "gpt-4"
+            # Use gpt-3.5-turbo as default (more accessible than gpt-4)
+            # Users can override with LLM_MODEL_NAME env var (e.g., gpt-4o, gpt-4-turbo)
+            model = model_name or "gpt-3.5-turbo"
             self.llm_client = ChatOpenAI(
                 model=model,
                 temperature=temperature,
